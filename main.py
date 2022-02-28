@@ -19,8 +19,9 @@ def attack(count):
             s.sendto(host,target_port)
             s.close()
             print("Successfull: " + count)
-        except ConnectionRefusedError:
+        except Exception as e:
             print("Server Error: " + count)
+            print("Error: " + e)
 
 
 for i in range(attack_count):
