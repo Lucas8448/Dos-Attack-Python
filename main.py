@@ -21,5 +21,5 @@ def attack(count):
 
 
 for i in range(attack_count):
-    thread = Thread(target=attack, args=i)
+    thread = Thread(target=attack, args=str(i))
     thread.start()
